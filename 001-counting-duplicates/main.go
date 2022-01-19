@@ -14,6 +14,8 @@ func main() {
 	test("indivisibility", 1)
 	test("11", 1)
 	test("aA", 1)
+	test_fancy("abcdeaB11", 3)
+	test_fancy("indivisibility", 1)
 }
 
 func duplicate_count(s1 string) int {
@@ -35,4 +37,19 @@ func duplicate_count(s1 string) int {
 
 func test(s string, e int) {
 	p("provided string:", s, "expected result:", e, "result provided:", duplicate_count(s))
+}
+
+// fancy solution from submissions on code-wars
+func duplicate_count_fancy(s1 string) (c int) {
+	m := make(map[rune]int)
+	for _, r := range strings.ToLower(s1) {
+		if m[r]++; m[r] == 2 {
+			c++
+		}
+	}
+	return
+}
+
+func test_fancy(s string, e int) {
+	p("provided string:", s, "expected result:", e, "fancy result provided:", duplicate_count_fancy(s))
 }
