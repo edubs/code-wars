@@ -2,25 +2,15 @@
 package highlow
 
 import (
-	"fmt"
-	"os"
 	"strconv"
 	"strings"
 )
-
-var p = fmt.Println
 
 func HighAndLow(in string) string {
 	// slice input string on space delimeter and convert to int
 	ints := []int{}
 	for _, c := range strings.Split(in, " ") {
-		i, err := strconv.Atoi(c)
-
-		if err != nil {
-			p("error:", err)
-			os.Exit(1)
-		}
-
+		i, _ := strconv.Atoi(c)
 		ints = append(ints, i)
 	}
 
