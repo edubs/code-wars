@@ -2,11 +2,11 @@
 package main
 
 import (
-	"fmt"
 	"math"
 )
 
 func Gap(g, m, n int) []int {
+	// create a new list of primes in range 'm' to 'n' inclusive
 	var pir []int
 	for _, prime := range SieveOfEratosthenes(n + 1) {
 		if prime >= m {
@@ -14,30 +14,22 @@ func Gap(g, m, n int) []int {
 		}
 	}
 
-	if len(pir) < 2 {
-		return nil // list of valid primes is less than two therefore no gap can be calculated, return nil
-	} else if testPair(pir[0], pir[1], g) {
-		return pir[0:2] // if the length is at least two, and the first two produce a match, no need to go further
-	} else {
+	if len(pir) >= 2 {
 		low := pir[0]
 		high := pir[1]
-		for index, value := range pir {
-			if index+1 > len(pir) {
-				fmt.Println("reached end")
+		for _, value := range pir {
+			if isGap(low, high, g) {
+				return []int{low, high}
 			}
-			if testPair(low, high, g) {
-				pir = []int{low, high}
-				return pir
-			} else {
-				low = high
-				high = value
-			}
+
+			low = high
+			high = value
 		}
 	}
-	return nil
+	return nil // list of valid primes is less than two therefore no gap can be calculated, or no gap was found
 }
 
-func testPair(a int, b int, c int) bool {
+func isGap(a int, b int, c int) bool {
 	if b-a == c {
 		return true
 	}
@@ -65,8 +57,5 @@ func SieveOfEratosthenes(value int) []int {
 }
 
 func main() {
-	fmt.Println(Gap(2, 5, 7))
-	fmt.Println(Gap(2, 100, 110))
-	fmt.Println(Gap(4, 100, 110))
-	fmt.Println(Gap(10, 300, 400))
+
 }
